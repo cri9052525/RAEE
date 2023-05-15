@@ -1,0 +1,19 @@
+{
+  "name": "raee",
+  "version": "1.0.0",
+  "description": "small project regarding the classification of electronic waste",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GandhilGrande/Gruppo-Tara-Prema-Msellek.git"
+  },
+  "author": "Cri9052525",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GandhilGrande/Gruppo-Tara-Prema-Msellek/issues"
+  },
+  "homepage": "https://github.com/GandhilGrande/Gruppo-Tara-Prema-Msellek#readme"
+}
