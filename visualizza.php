@@ -162,6 +162,7 @@
                 <th>Gruppo</th>
             </tr>
             <?php
+            error_reporting(0);
             include 'connessione.php';
 
             $sql = "SELECT * FROM `rifiuti`";
