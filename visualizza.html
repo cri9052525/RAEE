@@ -28,7 +28,7 @@
         height: 100vh;
     }
 
-    * {
+    *{
         font-family: 'Segoe UI';
     }
 
@@ -55,11 +55,11 @@
         justify-content: center;
     }
 
-    #navleft {
+    #navleft{
         justify-content: start;
     }
 
-    #navright {
+    #navright{
         justify-content: end;
     }
 
@@ -97,19 +97,16 @@
         width: 5vh;
     }
 
-    td,
-    th {
+    td,th {
         width: 10vw;
         height: 3vh;
         text-align: center;
     }
-
-    table {
+    table{
         margin-top: 10vh;
         margin-bottom: 10vh;
     }
-
-    td {
+    td{
         background-color: var(--colore2);
     }
 </style>
@@ -122,14 +119,15 @@
         </div>
         <div id="navcenter">
             <a href="index.php" style="background-color: rgba(255, 255, 255, 0); ">
-                <svg height="800px" width="800px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
-                    <style type="text/css">
-                        .st0 {
-                            fill: #000000;
-                        }
-                    </style>
-                    <g>
-                        <path class="st0" d="M410.889,43.919H301.535C299.775,19.787,280.578,0.08,255.994,0c-24.591,0.08-43.786,19.787-45.549,43.919
+            <svg height="800px" width="800px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
+                <style type="text/css">
+                    .st0 {
+                        fill: #000000;
+                    }
+                </style>
+                <g>
+                    <path class="st0" d="M410.889,43.919H301.535C299.775,19.787,280.578,0.08,255.994,0c-24.591,0.08-43.786,19.787-45.549,43.919
                H101.112c-22.791,0-41.408,18.633-41.408,41.4v32.156c0,5.692,4.65,10.35,10.338,10.35h0.678l23.856,342.881
                C96.151,493.408,116.064,512,138.855,512h234.283c22.759,0,42.7-18.592,44.286-41.295l23.836-342.881h0.678
                c5.696,0,10.358-4.658,10.358-10.35V85.318C452.296,62.552,433.659,43.919,410.889,43.919z M146.884,319.686
@@ -145,8 +143,8 @@
                c8.973-0.114,17.163-0.299,23.916-3.956C348.203,351.123,335.266,372.938,334.668,374.035z M366.643,319.283
                c-0.549,0.952-1.098,1.904-1.655,2.874c-6.794,11.738-18.678,11.884-32.701,12.062l-29.992-52.832l40.561-23.058
                c3.06,5.394,13.308,23.42,15.977,27.893C371.136,306.664,369.174,314.89,366.643,319.283z" />
-                    </g>
-                </svg>
+                </g>
+            </svg>
             </a>
         </div>
         <div id="navright">
@@ -161,21 +159,7 @@
                 <th>Anno</th>
                 <th>Gruppo</th>
             </tr>
-            <?php
-            include 'connessione.php';
 
-            $sql = "SELECT * FROM `rifiuti`";
-            $result = mysqli_query($conn, $sql);
-
-            while ($row = mysqli_fetch_row($result)) {
-                echo "<tr>";
-                echo "<td>".$row[1]."</td>";
-                echo "<td>".$row[2]."</td>";
-                echo "<td>".$row[3]."</td>";
-                echo "<td>".$row[4]."</td>";
-                echo "</tr>";
-            }
-            ?>
         </table>
     </main>
 
