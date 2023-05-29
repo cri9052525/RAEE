@@ -30,6 +30,7 @@
 
     * {
         font-family: 'Segoe UI';
+        box-sizing: border-box;
     }
 
     table,
@@ -156,10 +157,10 @@
     <main>
         <table>
             <tr>
-                <th>Modello</th>
-                <th>Marca</th>
-                <th>Anno</th>
-                <th>Gruppo</th>
+                <th onclick="window.location.href = 'visualizza.php?param=modello'">Modello</th>
+                <th onclick="window.location.href = 'visualizza.php?param=marca'">Marca</th>
+                <th onclick="window.location.href = 'visualizza.php?param=modello'">Data</th>
+                <th onclick="window.location.href = 'visualizza.php?param=gruppo'">Gruppo</th>
             </tr>
             <?php
             error_reporting(0);
@@ -167,13 +168,46 @@
 
             $sql = "SELECT * FROM `rifiuti`";
             $result = mysqli_query($conn, $sql);
+            $result=mysqli_fetch_array($result);
 
-            while ($row = mysqli_fetch_row($result)) {
+            if ($_GET["param"] == "modello") {
+                function compare_modello($a, $b)
+                {
+                    return strnatcmp($a[1], $b[1]);
+                }
+                usort($result, 'compare_lastname');
+            }
+            if ($_GET["param"] == "marca") {
+                function compare_marca($a, $b)
+                {
+                    return strnatcmp($a[2], $b[2]);
+                }
+
+                usort($result, 'compare_marca');
+            }
+            if ($_GET["param"] == "data") {
+                function compare_data($a, $b)
+                {
+                    return max($a[2], $b[2]);
+                }
+
+                usort($result, 'compare_data');
+            }
+            if ($_GET["param"] == "gruppo") {
+                function compare_gruppo($a, $b)
+                {
+                    return strnatcmp($a[4], $b[4]);
+                }
+
+                usort($result, 'compare_gruppo');
+            }
+
+            for ($i=0;$i=count($result);$i++) {
                 echo "<tr>";
-                echo "<td>".$row[1]."</td>";
-                echo "<td>".$row[2]."</td>";
-                echo "<td>".$row[3]."</td>";
-                echo "<td>".$row[4]."</td>";
+                echo "<td>" . $result[$i][1] . "</td>";
+                echo "<td>" . $result[$i][2] . "</td>";
+                echo "<td>" . $result[$i][3] . "</td>";
+                echo "<td>" . $result[$i][4] . "</td>";
                 echo "</tr>";
             }
             ?>
