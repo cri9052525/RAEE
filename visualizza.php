@@ -8,13 +8,14 @@
     <title>Tabella RAEE</title>
 </head>
 <style>
-    :root {
-        --colore1: #8aaa73;
-        --colore2: #bcd7bf;
-        --colore3: #7aa870;
-        --colore4: #b9c5a0;
-        --colore5: #9da267;
-    }
+        :root {
+            --colore1: #8aaa73;
+            --colore2: #bcd7bf;
+            --colore3: #3e7831;
+            --colore4: #b9c5a0;
+            --colore5: #9da267;
+        }
+
 
     body {
         background-color: var(--colore2);
@@ -40,64 +41,111 @@
     }
 
     #topnav {
-        position: absolute;
-        top: 0;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        height: 7vh;
-        width: 100%;
-        background-color: var(--colore1);
+            position: absolute;
+            top: 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 7vh;
+            width: 100%;
+            background-color: var(--colore1);
+            z-index: 2;
+        }
 
-    }
+        #navcenter {
+            height: 5vh;
+            justify-content: center;
+        }
 
-    #navcenter {
-        height: 5vh;
-        justify-content: center;
-    }
+        #navleft {
+            justify-content: start;
+        }
 
-    #navleft {
-        justify-content: start;
-    }
+        #navright {
+            justify-content: end;
+        }
 
-    #navright {
-        justify-content: end;
-    }
-
-    #navleft,
-    #navcenter,
-    #navright {
-        width: 33%;
-        display: flex;
-        align-items: center;
-    }
+        #navleft,
+        #navcenter,
+        #navright {
+            width: 33%;
+            display: flex;
+            align-items: center;
+        }
 
 
-    a {
-        width: 5vw;
-        height: 3vh;
-        color: white;
-        text-decoration: none;
-        background-color: var(--colore4);
-        margin: 2vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        border-radius: 30vh;
-        transition: all;
-        transition: .4s;
-    }
+        a {
+            width: 5vw;
+            height: 3vh;
+            color: white;
+            text-decoration: none;
+            background-color: var(--colore4);
+            margin: 2vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-radius: 30vh;
+            transition: all;
+            transition: .4s;
+        }
 
-    a:hover {
-        background-color: var(--colore2);
-    }
+        #navleft a, #navright a{
+            padding-left:4vw;
+            padding-right:4vw;
+        }
 
-    #navcenter svg {
-        height: 5vh;
-        width: 5vh;
-    }
+        a:hover {
+            background-color: var(--colore2);
+        }
 
+        #navcenter svg {
+            height: 5vh;
+            width: 5vh;
+        }
+        @media (orientation: portrait) {
+            #topnav {
+                height: 10vh;
+            }
+
+            #navleft {
+                width: 55vw;
+            }
+            #navleft a{
+                margin: 1vh;
+                padding: 1vh;
+                width: 50%;
+            }
+            #navright {
+                width: 55vw;
+            }
+            #navright a{
+                margin: 1vh;
+                padding: 1vh;
+                width: 100%;
+            }
+
+            #navleft,#navright{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            #navcenter {
+                width: 20vw;
+            }
+
+            main {
+                display: flex;
+                justify-content: center;
+                align-items: start;
+                width: 100%;
+                height: 100%;
+            }
+            table{
+                width: 100%;
+            }
+        }
     td,
     th {
         width: 10vw;
@@ -151,15 +199,16 @@
             </a>
         </div>
         <div id="navright">
-            <a href="info.html">Info</a>
+            <a href="https://github.com/cri9052525/RAEE">Info</a>
         </div>
     </div>
+    
     <main>
         <table>
             <tr>
                 <th onclick="window.location.href = 'visualizza.php?param=modello'">Modello</th>
                 <th onclick="window.location.href = 'visualizza.php?param=marca'">Marca</th>
-                <th onclick="window.location.href = 'visualizza.php?param=modello'">Data</th>
+                <th onclick="window.location.href = 'visualizza.php?param=data'">Data</th>
                 <th onclick="window.location.href = 'visualizza.php?param=gruppo'">Gruppo</th>
             </tr>
             <?php
@@ -167,28 +216,31 @@
             include 'connessione.php';
 
             $sql = "SELECT * FROM `rifiuti`";
-            $result = mysqli_query($conn, $sql);
-            $result=mysqli_fetch_array($result);
+            $rawResult = mysqli_query($conn, $sql);
+            $result = [];
+            while ($row = mysqli_fetch_row($rawResult)) {
+                array_push($result, $row);
+            }
 
             if ($_GET["param"] == "modello") {
                 function compare_modello($a, $b)
                 {
-                    return strnatcmp($a[1], $b[1]);
+                    return strnatcmp(strtolower($a[1]), strtolower($b[1]));
                 }
-                usort($result, 'compare_lastname');
+                usort($result, 'compare_modello');
             }
             if ($_GET["param"] == "marca") {
                 function compare_marca($a, $b)
                 {
-                    return strnatcmp($a[2], $b[2]);
+                    return strnatcmp(strtolower($a[2]),  strtolower($b[2]));
                 }
 
                 usort($result, 'compare_marca');
             }
             if ($_GET["param"] == "data") {
                 function compare_data($a, $b)
-                {
-                    return max($a[2], $b[2]);
+                {   
+                    return max($b[3], $a[3]);
                 }
 
                 usort($result, 'compare_data');
@@ -196,13 +248,13 @@
             if ($_GET["param"] == "gruppo") {
                 function compare_gruppo($a, $b)
                 {
-                    return strnatcmp($a[4], $b[4]);
+                    return $a[4] - $b[4];
                 }
 
                 usort($result, 'compare_gruppo');
             }
 
-            for ($i=0;$i=count($result);$i++) {
+            for ($i = 0; $i < count($result); $i++) {
                 echo "<tr>";
                 echo "<td>" . $result[$i][1] . "</td>";
                 echo "<td>" . $result[$i][2] . "</td>";

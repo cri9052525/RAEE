@@ -10,10 +10,11 @@
         :root {
             --colore1: #8aaa73;
             --colore2: #bcd7bf;
-            --colore3: #7aa870;
+            --colore3: #3e7831;
             --colore4: #b9c5a0;
             --colore5: #9da267;
         }
+
 
         * {
             box-sizing: border-box;
@@ -40,7 +41,6 @@
         }
 
         #topnav {
-            z-index: 3;
             position: absolute;
             top: 0;
             display: flex;
@@ -49,7 +49,7 @@
             height: 7vh;
             width: 100%;
             background-color: var(--colore1);
-
+            z-index: 2;
         }
 
         #navcenter {
@@ -90,6 +90,11 @@
             transition: .4s;
         }
 
+        #navleft a, #navright a{
+            padding-left:4vw;
+            padding-right:4vw;
+        }
+
         a:hover {
             background-color: var(--colore2);
         }
@@ -98,7 +103,64 @@
             height: 5vh;
             width: 5vh;
         }
+        @media (orientation: portrait) {
+            #topnav {
+                height: 10vh;
+            }
 
+            #navleft {
+                width: 55vw;
+            }
+            #navleft a{
+                margin: 1vh;
+                padding: 1vh;
+                width: 50%;
+            }
+            #navright {
+                width: 55vw;
+            }
+            #navright a{
+                margin: 1vh;
+                padding: 1vh;
+                width: 100%;
+            }
+
+            #navleft,#navright{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            #navcenter {
+                width: 20vw;
+            }
+
+            main {
+                display: flex;
+                justify-content: center;
+                align-items: start;
+                width: 100%;
+                height: 100%;
+            }
+            table{
+                width: 100%;
+            }
+            #inizia{
+                padding-left: 15vw;
+                padding-right: 15vw;
+            }
+            #mainright {
+                display: none !important;
+            }
+
+            #mainleft {
+                width: 100vw !important;
+            }
+            #mainleft *{
+                width: 100vw;
+                margin-left: 1vh !important;
+            }
+        }
         main {
             z-index: 2;
             display: flex;
@@ -195,7 +257,7 @@
             </a>
         </div>
         <div id="navright">
-            <a href="info.html">Info</a>
+            <a href="https://github.com/cri9052525/RAEE">Info</a>
         </div>
     </div>
 
@@ -204,7 +266,7 @@
             <h1>RAEE</h1>
             <h2>Lo smistamento reso semplice</h2>
             <p>Clicca "Inizia" per cominciare a reciclare</p>
-            <a href="">Inizia</a>
+            <a href="visualizza.php" id="inizia">Inizia</a>
         </div>
         <div id="mainright">
             <svg version="1.1" id="_x35_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">

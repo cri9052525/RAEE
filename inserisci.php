@@ -10,7 +10,7 @@
         :root {
             --colore1: #8aaa73;
             --colore2: #bcd7bf;
-            --colore3: #7aa870;
+            --colore3: #3e7831;
             --colore4: #b9c5a0;
             --colore5: #9da267;
         }
@@ -36,29 +36,33 @@
             padding: 2vh;
             width: 45vw;
             height: 40vh;
+            border-radius: 30px;
         }
 
-        @media (orientation: portrait) {
-            main {
-                width: 100%;
-                height: 100%;
-            }
-        }
+
 
         form * {
-            background-color: var(--colore4);
+            background-color: var(--colore3);
             width: 100%;
             margin: 1.3vh;
             height: 4vh;
             padding: 0.2vh;
             font-size: 2vh;
-            border-radius: 30px;
+            border-radius: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
             border: 0;
-            
+
+        }
+
+        form input[type="text"]{
+            padding-left: 1vh;
+        }
+
+        form p{
+            background-color: var(--colore4);
+            color: #000000;
         }
 
         input:focus {
@@ -68,9 +72,11 @@
         input::placeholder {
             color: white;
             text-transform: capitalize;
+            text-align: left;
         }
 
-        #submit{
+        #submit {
+            width: 50%;
             transition: all 200ms;
             cursor: pointer;
             text-transform: capitalize;
@@ -94,7 +100,9 @@
             justify-content: center;
             align-items: center;
             width: 100%;
+            padding: 0;
         }
+
 
         label {
             width: 15%;
@@ -102,6 +110,7 @@
             justify-content: center;
             align-items: center;
             text-transform: capitalize;
+            background-color: transparent;
         }
 
         * {
@@ -119,7 +128,7 @@
             height: 7vh;
             width: 100%;
             background-color: var(--colore1);
-
+            z-index: 2;
         }
 
         #navcenter {
@@ -135,7 +144,9 @@
             justify-content: end;
         }
 
-        #navleft,#navcenter,#navright {
+        #navleft,
+        #navcenter,
+        #navright {
             width: 33%;
             display: flex;
             align-items: center;
@@ -158,6 +169,11 @@
             transition: .4s;
         }
 
+        #navleft a, #navright a{
+            padding-left:4vw;
+            padding-right:4vw;
+        }
+
         a:hover {
             background-color: var(--colore2);
         }
@@ -165,6 +181,49 @@
         #navcenter svg {
             height: 5vh;
             width: 5vh;
+        }
+        @media (orientation: portrait) {
+            #topnav {
+                height: 10vh;
+            }
+
+            #navleft {
+                width: 55vw;
+            }
+            #navleft a{
+                margin: 1vh;
+                padding: 1vh;
+                width: 50%;
+            }
+            #navright {
+                width: 55vw;
+            }
+            #navright a{
+                margin: 1vh;
+                padding: 1vh;
+                width: 100%;
+            }
+
+            #navleft,#navright{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            #navcenter {
+                width: 20vw;
+            }
+
+            main {
+                display: flex;
+                justify-content: center;
+                align-items: start;
+                width: 100%;
+                height: 100%;
+            }
+            table{
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -177,7 +236,7 @@
         </div>
         <div id="navcenter">
             <a href="index.php" style="background-color: rgba(255, 255, 255, 0); ">
-                <svg height="800px" width="800px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
+                <svg height="100%" width="100%" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
                     <style type="text/css">
                         .st0 {
                             fill: #000000;
@@ -205,12 +264,13 @@
             </a>
         </div>
         <div id="navright">
-            <a href="info.html">Info</a>
+            <a href="https://github.com/cri9052525/RAEE">Info</a>
         </div>
     </div>
 
     <main>
         <form method="post">
+            <p>Dati rifiuto</p>
             <input type="text" name="modello" placeholder="modello">
             <input type="text" name="marca" placeholder="marca">
             <input type="date" name="data" placeholder="data">
@@ -225,58 +285,46 @@
                 </select>
             </div>
             <input id="submit" type="submit">
+            
         </form>
+        
     </main>
-
-
     <?php
     error_reporting(0);
     include "connessione.php";
 
-    unset($_POST["modello"]);
-    unset($_POST["marca"]);
-    unset($_POST["data"]);
-    unset($_POST["gruppo"]);
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        $modello = $_POST["modello"];
+        $marca = $_POST["marca"];
+        $data = $_POST["data"];
+        $gruppo = $_POST["gruppo"];
 
-    $modello = $_POST["modello"];
-    $marca = $_POST["marca"];
-    $data = $_POST["data"];
-    $gruppo = $_POST["gruppo"];
+        if (
+            $modello != "" &&
+            $marca != "" &&
+            $data != "" &&
+            $gruppo != ""
+        ) {
+            $sql = "INSERT INTO `rifiuti` (`id`, `Modello`, `Marca`, `Data`, `Gruppo`) VALUES (NULL, '$modello', '$marca', '$data', '$gruppo')";
+            $result = mysqli_query($conn, $sql);
 
+            if ($result) {
+                // Clear the POST data
+                $_POST = array();
 
-
-    $sql = "INSERT INTO `rifiuti` (`id`, `Modello`, `Marca`, `Data`, `Gruppo`) VALUES (NULL, '$modello', '$marca', '$data', '$gruppo')";
-    if (isset($_POST["modello"]) &&
-     isset($_POST["marca"]) &&
-      isset($_POST["data"]) &&
-       isset($_POST["gruppo"]) &&
-       $modello!="" &&
-       $marca!="" &&
-       $data!="" &&
-       $gruppo!="") {
-        $result=mysqli_query($conn, $sql);
-        if ($result) {
-            unset($_POST["modello"]);
-            unset($_POST["marca"]);
-            unset($_POST["data"]);
-            unset($_POST["gruppo"]);
-            echo "<p>dati inseriti correttamente</p>";
-            echo "<a href='visualizza.php'>Visualizza dati</a>";
-        }
-        else{
-            unset($_POST["modello"]);
-            unset($_POST["marca"]);
-            unset($_POST["data"]);
-            unset($_POST["gruppo"]);
-            echo "Errore nell'inserimento dei dati, controlla di avere inserito i dati corretti e prova ancora";
+                // Redirect using JavaScript
+                echo '<script>window.location.href = "successo.html";</script>';
+                exit();
+            } else {
+                echo "<p>Errore durante l'inserimento nel database</p>";
+            }
         }
     }
+?>
 
-    unset($_POST["modello"]);
-    unset($_POST["marca"]);
-    unset($_POST["data"]);
-    unset($_POST["gruppo"]);
-    ?>
+
+
+
 </body>
 
 </html>
